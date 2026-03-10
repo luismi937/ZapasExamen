@@ -1,14 +1,20 @@
 ﻿@model List<Zapatilla>
+@{
+    ViewData["Title"] = "Listado de Zapatillas";
+}
+
 <h1>Listado de Zapatillas</h1>
-<table>
+<table class="table">
     <thead>
-        <th>zapatillas</th>
+        <tr>
+            <th>Zapatillas</th>
+        </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
             <tr>
-               <td><a asp-action="detalles" asp-route-id="@item.IdProducto">@item.Nombre</a></td>
+               <td><a asp-action="Detalles" asp-route-idproducto="@item.IdProducto">@item.Nombre</a></td>
             </tr>
         }
     </tbody>

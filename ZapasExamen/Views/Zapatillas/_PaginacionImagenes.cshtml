@@ -1,0 +1,36 @@
+@model ImagenZapatilla
+@{
+    int anterior = (int)ViewData["ANTERIOR"];
+    int siguiente = (int)ViewData["SIGUIENTE"];
+    int ultimo = (int)ViewData["ULTIMO"];
+    int numRegistros = (int)ViewData["NUMREGISTROS"];
+    int posicion = (int)ViewData["POSICION"];
+    int idproducto = (int)ViewData["IDPRODUCTO"];
+}
+
+@if(Model != null)
+{
+    <div class="imagen-container">
+        <h4>Imagen @posicion de @numRegistros</h4>
+        <img src="@Model.Imagen" alt="Imagen de zapatilla" style="max-width: 500px; height: auto;" />
+        
+        <div class="paginacion-botones" style="margin-top: 20px;">
+            <button onclick="cargarImagen(1)" accesskey="p" class="btn btn-secondary">
+                Primero
+            </button>
+            <button onclick="cargarImagen(@anterior)" accesskey="a" class="btn btn-secondary">
+                Anterior
+            </button>
+            <button onclick="cargarImagen(@siguiente)" accesskey="s" class="btn btn-secondary">
+                Siguiente
+            </button>
+            <button onclick="cargarImagen(@ultimo)" accesskey="u" class="btn btn-secondary">
+                Último
+            </button>
+        </div>
+    </div>
+}
+else
+{
+    <p>No hay imágenes disponibles para esta zapatilla.</p>
+}

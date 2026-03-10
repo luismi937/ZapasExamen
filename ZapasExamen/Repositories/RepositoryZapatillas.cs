@@ -41,27 +41,34 @@ namespace ZapasExamen.Repositories
         {
             return await this.context.zapa.Where(z => z.IdProducto == idproducto).FirstOrDefaultAsync();
         }
-        public async Task<ModelPaginacionImagenes> GetPaginacionImagenesAsync(int posicion, int idhospital)
+        public async Task<ModelPaginacionImagenes> GetPaginacionImagenesAsync(int posicion, int idproducto)
         {
-            string sql = "SP_SALA_HOSPITAL @posicion, @idhospital, @numregistros out";
+            SqlParameter pamIdProducto = new SqlParameter("@idproducto", idproducto);
             SqlParameter pamPosicion = new SqlParameter("@posicion", posicion);
-            SqlParameter pamIdHospital = new SqlParameter("@idhospital", idhospital);
 
-            var consulta = await this.context.zapa.FromSqlRaw(sql, pamPosicion, pamIdHospital).ToListAsync();
+            var consulta = await this.context.ImagenesZapatillas
+                .FromSqlRaw("SP_IMAGENES_ZAPATILLAS @idproducto, @posicion", pamIdProducto, pamPosicion)
+                .ToListAsync();
 
-            Zapatilla zapa = consulta.FirstOrDefault();
+            ImagenZapatilla imagen = consulta.FirstOrDefault();
+            
+            if (imagen == null)
+            {
+                return null;
+            }
+
+            var zapa = await this.FindZapatillaAsync(idproducto);
+            
+            var totalImagenes = await this.context.ImagenesZapatillas
+                .Where(i => i.IdProducto == idproducto)
+                .CountAsync();
+
             return new ModelPaginacionImagenes
             {
                 Zapa = zapa,
-                ImagenZapatilla = new ImagenZapatilla
-                {
-                    IdProducto = zapa.IdProducto,
-                    Imagen = zapa.Descripcion
-                },
-                NumRegistros = consulta.Count
+                ImagenZapatilla = imagen,
+                NumRegistros = totalImagenes
             };
-
-
         }
     }
 }

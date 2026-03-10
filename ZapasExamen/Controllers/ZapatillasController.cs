@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ZapasExamen.Models;
+using ZapasExamen.Repositories;
 
 namespace ZapasExamen.Controllers
 {
@@ -24,7 +26,7 @@ namespace ZapasExamen.Controllers
         {
             if (posicion == null)
             {
-                posicion = 0;
+                posicion = 1;
             }
             ModelPaginacionImagenes model = await this.repo.GetPaginacionImagenesAsync(posicion.Value, idproducto);
             ViewData["NUMREGISTROS"] = model.NumRegistros;

@@ -1,7 +1,22 @@
+using Microsoft.EntityFrameworkCore;
+using ZapasExamen.Data;
+using ZapasExamen.Repositories;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// Configurar DbContext
+string connectionString = builder.Configuration.GetConnectionString("localhost");
+builder.Services.AddDbContext<ZapatillaContext>(options =>
+{
+    options.UseSqlServer(connectionString);
+    options.EnableSensitiveDataLogging();
+});
+
+// Registrar el repositorio
+builder.Services.AddTransient<RepositoryZapatillas>();
 
 var app = builder.Build();
 

@@ -1,0 +1,49 @@
+@model Zapatilla
+@{
+    ViewData["Title"] = "Detalles de Zapatilla";
+}
+
+<h2>Detalles de @Model.Nombre</h2>
+
+<div class="zapatilla-detalles">
+    <h3>Información</h3>
+    <dl>
+        <dt>ID Producto:</dt>
+        <dd>@Model.IdProducto</dd>
+        
+        <dt>Nombre:</dt>
+        <dd>@Model.Nombre</dd>
+        
+        <dt>Descripción:</dt>
+        <dd>@Model.Descripcion</dd>
+        
+        <dt>Precio:</dt>
+        <dd>@Model.Precio €</dd>
+    </dl>
+    
+    <hr />
+    
+    <h3>Imágenes</h3>
+    <div id="imageneszapatilla">
+        <!-- Aquí se cargará la vista parcial con Ajax -->
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Volver al listado</a>
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            cargarImagen(1);
+        });
+
+        function cargarImagen(posicion) {
+            var idproducto = @Model.IdProducto;
+            var request = "PaginacionImagenes?posicion=" + posicion + "&idproducto=" + idproducto;
+            
+            $("#imageneszapatilla").load(request);
+        }
+    </script>
+}
