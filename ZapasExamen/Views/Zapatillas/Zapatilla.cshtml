@@ -1,0 +1,15 @@
+﻿@model List<Zapatilla>
+<h1>Listado de Zapatillas</h1>
+<table>
+    <thead>
+        <th>zapatillas</th>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+               <td><a asp-action="detalles" asp-route-id="@item.IdProducto">@item.Nombre</a></td>
+            </tr>
+        }
+    </tbody>
+</table>
