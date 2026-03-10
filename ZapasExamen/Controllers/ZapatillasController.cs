@@ -14,12 +14,11 @@ namespace ZapasExamen.Controllers
         public async Task<IActionResult> Index()
         {
             List<Zapatilla> zapatillas = await this.repo.GetZapatillasAsync();
-            return View(zapatillas);
+            return View("Zapatilla", zapatillas);
         }
         public async Task<IActionResult> Detalles(int idproducto)
         {
             Zapatilla zapa = await this.repo.FindZapatillaAsync(idproducto);
-            ViewData["ZAPATILLA"] = zapa;
             return View(zapa);
         }
         public async Task<IActionResult> PaginacionImagenes(int? posicion, int idproducto)
